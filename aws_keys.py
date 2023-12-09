@@ -1,5 +1,5 @@
 import boto3
-
+#get through s3
 credentials = open('credentials.txt', 'r').read().splitlines()
 cred = {i.split('=')[0]: i.split('=')[1] for i in credentials}
 
