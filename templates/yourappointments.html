@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Appointments</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}" />
+
+</head>
+{%block body%}
+<h4>Upcoming Appointments</h4>
+<div id="appointments">
+    {%set ns = namespace(flag = 0, index = 0)%}
+    {%for appointment in appointmentsAll%}
+    {%if appointment['Date'] >= currentDate%}
+    {%set ns.flag = 1%}
+    <div class="appointment-card">
+        <h3>Doctor: {{appointment['DoctorName']}}</h3>
+        <p>Doctor Phone: {{appointment['DoctorPhone']}}</p>
+        <p>Doctor Email: {{appointment['DoctorEmail']}}</p>
+        <p>Pet Name: {{appointment['PetName']}}</p>
+        <p>Pet Type: {{appointment['PetType']}}</p>
+        <p>Date: {{appointment['Date']}}</p>
+        <p>Time: {{appointment['timeslot']}} ({{timeDict[appointment['timeslot']][0]}} to
+            {{timeDict[appointment['timeslot']][1]}})</p>
+        <p>Address: {{appointment['address']}}</p>
+        <p>Services Required: {{appointment['Services']}}</p>
+        {% if appointment['Fee'] != '-'%}
+        <p>Report: </p>
+        <form action="/yourappointments" method="POST">
+            {{form_ind.csrf_token}}
+            {{form_ind.index(value = ns.index, readonly=True)}}
+            {{form_ind.Submit}}
+        </form>
+        <p>Fee: {{appointment['Fee']}}</p>
+        {%if appointment['Paid'] != '1'%}
+        <form action="/yourappointments" method="POST">
+            {{form_pay.csrf_token}}
+            {{form_pay.index(value = ns.index, readonly=True)}}
+            {{form_pay.PaymentButton}}
+            <form>
+                {%else%}
+                <h3 type="message">Payment Status: Paid</h3>
+                {%endif%}
+                {%endif%}
+    </div>
+    {%endif%}
+    {%set ns.index = ns.index + 1%}
+    {%endfor%}
+
+    {%if ns.flag == 0%}
+    <p>You have no upcoming appointments</p>
+    {%endif%}
+</div>
+
+<h4>Past Appointments</h4>
+<div id="appointments">
+    {%set ns = namespace(flag = 0, index = 0)%}
+    {%for appointment in appointmentsAll%}
+    {%if appointment['Date'] < currentDate%} {%set ns.flag=1%} <div class="appointment-card">
+        <h3>Doctor: {{appointment['DoctorName']}}</h3>
+        <p>Doctor Phone: {{appointment['DoctorPhone']}}</p>
+        <p>Doctor Email: {{appointment['DoctorEmail']}}</p>
+        <p>Pet Name: {{appointment['PetName']}}</p>
+        <p>Pet Type: {{appointment['PetType']}}</p>
+        <p>Date: {{appointment['Date']}}</p>
+        <p>Time: {{appointment['timeslot']}} ({{timeDict[appointment['timeslot']][0]}} to
+            {{timeDict[appointment['timeslot']][1]}})</p>
+        <p>Address: {{appointment['address']}}</p>
+        <p>Services Required: {{appointment['Services']}}</p>
+        {% if appointment['Fee'] != '-'%}
+        <p>Report: </p>
+        <form action="/yourappointments" method="POST">
+            {{form_ind.csrf_token}}
+            {{form_ind.index(value = ns.index, readonly=True)}}
+            {{form_ind.Submit}}
+        </form>
+        <p>Fee: {{appointment['Fee']}}</p>
+        {%if appointment['Paid'] != '1'%}
+        <form action="/yourappointments" method="POST">
+            {{form_pay.csrf_token}}
+            {{form_pay.index(value = ns.index, readonly=True)}}
+            {{form_pay.PaymentButton}}
+            <form>
+                {%else%}
+                <h3 type="message">Payment Status: Paid</h3>
+                {%endif%}
+                {%endif%}
+</div>
+{%endif%}
+{%set ns.index = ns.index + 1%}
+{%endfor%}
+{%if ns.flag == 0%}
+<p>You have no past appointments</p>
+{%endif%}
+</div>
+{%endblock%}
+
+</html>

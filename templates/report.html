@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+</head>
+<link
+      rel="stylesheet"
+      href="{{url_for('static', filename='styles.css')}}"
+/>
+  {%block body%}
+  </br>
+  <div class="container">
+    <h1>Reports</h1>
+    {%set ns = namespace(index = 1)%}
+    <form action = "/report" method = "POST">
+    {{form.csrf_token}}
+    <select name="Petname" class="formdata">
+      <option value="" disabled selected>Choose Pet</option>
+      {%for i in appoint%}
+      <option value="{{ns.index}}" {% if ChosenPet|int == ns.index %} selected {% endif %}>{{"Pet Name: " + appoint[ns.index-1]['PetName'] + " | " + "Owner Name: " + appoint[ns.index-1]['Name']}}</option>
+      {%set ns.index = ns.index + 1%}
+      {%endfor%}
+    </select>
+    {%set ns.index = 1%}
+    {{form.Submit(class_ = "submit")}}
+    {%if ChosenPet|int > 0%}
+    <h2>Reports:</h2>
+    {%for i in appoint[ChosenPet|int-1]["filenames"]%}
+    {{form.Download(class_= "formdata", value = i, button = ns.index)}}</br>
+    {%set ns.index = ns.index + 1%}
+    {%endfor%}
+    {%endif%}
+  </form>
+  
+  <form action = "/report" method = "POST">
+  </form>
+  
+  </div>
+  {%endblock%}
+</html>

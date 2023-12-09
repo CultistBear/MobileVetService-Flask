@@ -1,0 +1,310 @@
+header.headerhome{
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+body.home{  
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;      
+}
+
+body.sign {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+ul.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-left: 50px;
+    padding-right: 50px;
+    overflow: hidden;
+    background-color: #000000;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+}
+
+.dropdown {
+    float: right;
+    overflow: hidden;
+    background-color: #04AA6D;
+}
+
+.dropdown .dropbtn {
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    overflow: hidden;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 125px;
+    overflow: hidden;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+  
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    border-right-width: 30px;
+}
+textarea {
+  resize:vertical;
+}
+
+.fieldset-Profile {
+  display: inline-block;
+}
+
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+    overflow: hidden;
+}
+  
+.dropdown:hover .dropdown-content {
+    overflow: hidden;
+    display: block;
+}
+
+li.navcon {
+    float: left; 
+}
+  
+li.navcon a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 14px;
+    text-decoration: none;
+}
+  
+li.navcon a:hover:not(.active) {
+    background-color: #111;
+} 
+
+section {
+    padding: 20px;
+    flex: 1;
+}
+
+.form-element-title{
+    padding: 10px;
+    text-align: left;
+    font-size: medium;
+}
+
+.heading{
+    text-align: center;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+}
+
+.para{
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.pic{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  margin-top: auto;
+  display: block;
+  left: 0;
+  bottom: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+h3[type="error"]  {
+    color: rgb(255, 51, 51);
+}
+
+h3[type="message"]  {
+    color: #4caf50;
+}
+
+h4{
+    text-align: center;
+    font-size: x-large;
+}
+
+.formdata {
+    font-family: Arial, sans-serif;
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.message-HR{
+    color: red;
+}
+
+input[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit:hover,
+button:hover {
+    background-color: #45a049;
+}
+
+.submit-button-middle{
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Error and message styles */
+h3[type="error"] {
+    color: rgb(255, 51, 51);
+}
+
+h3[type="message"] {
+    color: #4caf50;
+}
+
+/* Switch signup/signin styles */
+.switch-signup-signin {
+    margin-top: 20px;
+}
+
+.add-pet-btn, .remove-pet-btn {
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 10px;
+    color: blue;
+    text-decoration: underline;
+  }
+
+.switch-signup-signin a,
+.navbar a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.main-hr {
+    width: 30%;
+    border: none;
+  }
+  .btn:focus {
+  outline: none;
+  }
+  .btn{
+    width: 95px;
+    height: 50px;
+    border: 1px solid #cdcdcd;
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    position: relative;
+    transition: 0.3s ease-in-out;
+    overflow: hidden;
+  }
+  .btn:hover{
+    background-color: #4caf50;
+  }
+  
+.radio-group {
+  list-style: none;  
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;  
+}
+
+.pet-cont{
+  text-align: center; 
+  margin-top: 30px;
+}
+
+#appointments {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.appointment-card {
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.appointment-card h3 {
+    margin-top: 0;
+}
+
+.img{
+    border: 8px solid #000000;
+    float:inline-end;    
+}

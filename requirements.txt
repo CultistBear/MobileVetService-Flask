@@ -1,0 +1,8 @@
+boto3==1.29.1
+Flask==2.0.0
+Flask_WTF==1.1.1
+PyMySQL==1.1.0
+stripe==7.6.0
+Werkzeug==2.3.4
+WTForms==3.0.1
+email_validator

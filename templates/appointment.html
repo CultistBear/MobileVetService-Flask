@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+	<link
+      rel="stylesheet"
+      href="{{url_for('static', filename='styles.css')}}"
+    />
+	<link href="static/css/all.css" rel="stylesheet"/>
+  <body class="home">
+	
+    {%block body%} 
+</br>
+    <section id="appointment">
+		<h2>Appointments <a href="{{ url_for('bookappointments') }}"><i class="fa-solid fa-pen-clip fa-bounce"></i></a></h2>
+		<p>Scheduling regular veterinary appointments is crucial for maintaining your pet's health. Whether it's a routine check-up, vaccinations, or addressing a specific health concern, our clinic is here to provide personalized care for your furry companions.</p>
+		<p>To schedule an appointment, you can:</p>
+		<ol>
+			<li><a href="{{ url_for('bookappointments') }}">Book an appointment online</a></li>
+			<li>Call us at (123) 456-7890</li>
+			<li>Email us at appointments@lifelinevet.com</li>
+			<li>Visit our clinic in person</li>
+		</ol>
+		<img src="/static/appointment.jpg" alt="Appointments Image">
+	</section>
+</br>
+    {%endblock%}
+  </body>
+</html>

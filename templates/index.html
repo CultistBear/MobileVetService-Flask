@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vet Appointment Signup</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='styles.css')}}"
+    />
+  </head>
+  <body class="sign">
+    <div class="container">
+      <h1>Sign Up</h1>
+      <form id="signup-form" action="/signup" method="POST">
+        {{ form.csrf_token }}
+        <!-- Change action attribute -->
+        {{form.Username(class_ = "formdata", placeholder_ = "Username", title_ = "Only use uppercase letters, lowercase letters, numbers and underscore. Username must be between 5 to 16 characters")}}
+        <br />
+        {{form.Name(class_ = "formdata", placeholder_ = "Name", title_ = "Only use uppercase letters and lowercase letters. Name must be atleast 3 characters.")}}
+        <br />
+        {{form.Phone(class_ = "formdata", type_ = tel, placeholder_ = "Mobile Number", title_ = "Enter a 10-digit mobile number without spaces or special characters.")}}
+        <br />
+        {{form.Email(class_ = "formdata", placeholder_ = "Email", title_ = "Enter a valid email address.", required_ = "required")}}
+        <br />
+        {{form.Password(class_ = "formdata", placeholder_ = "Password", title_ = "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters")}}
+        <br />
+        {{form.Confirm_Password(class_ = "formdata", placeholder_ = "Confirm Password", title_ = "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters")}}
+        <br />
+        {{form.Submit(class_ = "submit")}}
+      </form>
+      <div class="switch-signup-signin">
+        {% if message %}
+        <h3 type="message">{{message}}</h3>
+        {% endif %} {% if error %}
+        <h3 type="error">{{error}}</h3>
+        {% endif %}
+        {% for error in form.Email.errors %}
+        <h3 type="error">{{error}}</h3>
+        {% endfor %}
+        {% for error in form.Password.errors %}
+        <h3 type="error">{{error}}</h3>
+        {% endfor %}
+        <span>Already have an account?</span>
+        <a href="{{url_for('signin')}}" id="signin-link">Sign In</a>
+      </div>
+    </div>
+  </body>
+</html>

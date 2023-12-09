@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Appointments</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='styles.css')}}"
+    />
+    
+</head>
+{%block body%}
+    <h4>Upcoming Appointments</h4>
+    <div id="appointments">
+    {%set ns = namespace(flag = 0, index = 0)%}
+    {%for appointment in appointmentsAll%}
+        {%if appointment['Date']>= currentDate%}
+        {%set ns.flag = 1%}
+        <div class = "appointment-card">
+            <h3>Customer Name: {{appointment['Name']}}</h3>
+            <p>Customer Phone: {{appointment['DoctorPhone']}}</p>
+            <p>Customer Email: {{appointment['Email']}}</p>
+            <p>Pet Name: {{appointment['PetName']}}</p>
+            <p>Pet Type: {{appointment['PetType']}}</p>
+            <p>Date: {{appointment['Date']}}</p>
+            <p>Time: {{appointment['timeslot']}} ({{timeDict[appointment['timeslot']][0]}} to {{timeDict[appointment['timeslot']][1]}})</p>
+            <p>Address: {{appointment['address']}}</p>
+            <p>Services Required: {{appointment['Services']}}</p>
+            <p>Medical Record: </p>
+            <textarea class="formdata" readonly>{{appointment['MedicalRecord']}}</textarea>
+            <p>Report: </p>
+                <form id = "report" enctype="multipart/form-data" action = "/yourappointments" method = "POST">  
+                    {%if appointment['Fee'] == '-'%}
+                    {{ form.csrf_token }}
+                    {%else%}
+                    {{form_ind.csrf_token}}
+                    {%endif%}
+                    
+                    {{form.index(value = ns.index, readonly=True)}}
+                    {{form_ind.index(value = ns.index, readonly=True)}}
+                    
+                    {%if appointment['Fee'] == '-'%}
+                        {{ form.file(class_ = "formdata", accept_="application/pdf", required = True)}}
+                        <p>Fee: </p>
+                        {{form.fee(class_="formdata", value_ = '0', required = True)}}
+                        <div class="submit-button-middle">
+                        {{form.Submit(class_ = "submit" , value_ = "Upload")}}
+                        </div>
+                    {%else%}
+                        <p>Fee: {{appointment['Fee']}}</p>
+                        {{form_ind.Submit(class_ = "submit", value_ = "Download")}}   
+                    {%endif%}
+                </form>
+            </div>
+        {%endif%}
+        {%set ns.index = ns.index + 1%}
+    {%endfor%}
+
+    {%if ns.flag == 0%}
+    <p>You have no upcoming appointments</p>
+    {%endif%}
+    </div>
+
+<h4>Past Appointments</h4>
+<div id="appointments">
+    {%set ns = namespace(index = 0, flag = 0)%}
+    {%for appointment in appointmentsAll%}
+        {%if appointment['Date'] < currentDate%}
+        {%set ns.flag = 1%}
+        <div class = "appointment-card">
+            <h3>Customer Name: {{appointment['Name']}}</h3>
+            <p>Customer Phone: {{appointment['DoctorPhone']}}</p>
+            <p>Customer Email: {{appointment['Email']}}</p>
+            <p>Pet Name: {{appointment['PetName']}}</p>
+            <p>Pet Type: {{appointment['PetType']}}</p>
+            <p>Date: {{appointment['Date']}}</p>
+            <p>Time: {{appointment['timeslot']}} ({{timeDict[appointment['timeslot']][0]}} to {{timeDict[appointment['timeslot']][1]}})</p>
+            <p>Address: {{appointment['address']}}</p>
+            <p>Services Required: {{appointment['Services']}}</p>
+            <p>Medical Record: </p>
+            <textarea class="formdata" readonly>{{appointment['MedicalRecord']}}</textarea>
+            <p>Report: </p>
+
+            <form id = "report" enctype="multipart/form-data" action = "/yourappointments" method = "POST">  
+            {%if appointment['Fee'] == '-'%}
+            {{ form.csrf_token }}
+            {%else%}
+            {{form_ind.csrf_token}}
+            {%endif%}
+            
+            {{form.index(value = ns.index, readonly=True)}}
+            {{form_ind.index(value = ns.index, readonly=True)}}
+
+            {%if appointment['Fee'] == '-'%}
+                        {{ form.file(class_ = "formdata", accept_="application/pdf", required = True)}}
+                        <p>Fee: </p>
+                        {{form.fee(class_="formdata", value_ = '0', required = True)}}
+                        <div class="submit-button-middle">
+                        {{form.Submit(class_ = "submit", value_ = "Upload")}}
+                        </div>
+                </form>
+            {%else%}
+                <form action = "/yourappointments" method = "POST">
+                    {{form_ind.Submit(class_ = "submit", value_ = "Download")}}
+                    <p>Fee: {{appointment['Fee']}}</p>
+                </form>
+            {%endif%}
+            </div>
+        {%endif%}
+        {%set ns.index = ns.index + 1%}
+    {%endfor%}
+    {%if ns.flag == 0%}
+    <p>You have no past appointments</p>
+    {%endif%}
+</div>
+{%endblock%}
+</html>

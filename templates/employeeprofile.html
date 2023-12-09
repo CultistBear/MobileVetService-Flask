@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+</head>
+<link
+      rel="stylesheet"
+      href="{{url_for('static', filename='styles.css')}}"
+/>
+  {%block body%}
+  </br>
+  <div class="container">
+    <h1>Employee Profile</h1>
+    <form id="profile-form" action="/pepe" method="POST">
+    {{ form.csrf_token }}
+    <h3 class = "form-element-title">Username:</h3>
+    {{ form.Username(class_ = "formdata", value_ = session['username'], readonly = True)}}
+    <h3 class = "form-element-title">Name:</h3>
+    {{ form.Name(class_ = "formdata", value_ = user['Name'])}}
+    <h3 class = "form-element-title">Phone Number</h3>
+    {{ form.Phone(class_ = "formdata", value_ = user['Phone'])}}
+    <h3 class = "form-element-title">Email:</h3>
+    {{ form.Email(class_ = "formdata", value_ = user['Email'], readonly = True)}}
+    <h3 class = "form-element-title">Pet Types:</h3>
+    {{ form.PetTypes(class_ = "formdata", value_ = user['Pet_Types'], readonly = True)}}
+    <h3 class = "form-element-title">Working Hours:</h3>
+    {{form.Time(class_ = "formdata", value_ = user['start_time']+" - "+user['end_time'], readonly = True)}}
+
+    <p class = "message-HR">For changing Email, Username, Pet Types or Working Hours please contact HR.</p>
+    </div>
+      </br>
+      {% if message %}
+      <h3 type="message">{{message}}</h3>
+      {% endif %} {% if error %}
+      <h3 type="error">{{error}}</h3>
+      {% endif %}
+      {% for error in form.Email.errors %}
+      <h3 type="error">{{error}}</h3>
+      {% endfor %}
+  </div>
+</br>
+{%endblock%}
+</html>

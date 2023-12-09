@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+</head>
+<link
+      rel="stylesheet"
+      href="{{url_for('static', filename='styles.css')}}"
+/>
+  {%block body%}
+  </br>
+  <div class="container">
+    <h1>User Profile</h1>
+    <form id="profile-form" action="/profile" method="POST">
+    {{ form.csrf_token }}
+    <h3 class = "form-element-title">Username:</h3>
+    {{ form.Username(class_ = "formdata", value_ = session['username'], readonly = True)}}
+    <h3 class = "form-element-title">Name:</h3>
+    {{ form.Name(class_ = "formdata", value_ = user['Name'])}}
+    <h3 class = "form-element-title">Phone:</h3>
+    {{ form.Phone(class_ = "formdata", value_ = user['Phone'])}}
+    <h3 class = "form-element-title">Email:</h3>
+    {{ form.Email(class_ = "formdata", value_ = user['Email'])}}
+    <h1>Add Pets</h1>
+    <div id="pet-fields">
+        {% for index in range(user.PetName|length) if index!=0%}
+        <fieldset>
+          <legend><h2>Pet Info {{ index}}</h2></legend>
+          <h3 class = "form-element-title">Pet Name:</h3>
+          <input type="text" class="formdata" name="PetName{{ index }}" value="{{ user.PetName[index] }}" placeholder="Pet's Name">
+          <h3 class = "form-element-title">Pet Type:</h3>
+          <select name="PetType{{ index }}" class="formdata">
+            <option value="" disabled selected>Choose Your Pet's Type</option>
+            <option value="Dog" {% if user.PetType[index] == 'Dog' %} selected {% endif %}>Dog</option>
+            <option value="Cat" {% if user.PetType[index] == 'Cat' %} selected {% endif %}>Cat</option>
+            <option value="Bird" {% if user.PetType[index] == 'Bird' %} selected {% endif %}>Bird</option>
+            <option value="Hamster" {% if user.PetType[index] == 'Hamster' %} selected {% endif %}>Hamster</option>
+            <option value="Goldfish" {% if user.PetType[index] == 'Goldfish' %} selected {% endif %}>Goldfish</option>
+            <option value="Turtle" {% if user.PetType[index] == 'Turtle' %} selected {% endif %}>Turtle</option>
+          </select>
+          <h3 class = "form-element-title">Pet's Medical History:</h3>
+          <textarea name="PetMedicalHistory{{ index }}" class="formdata" placeholder="Enter your Pet's Medical History">{{ user.PetMedicalHistory[index] }}</textarea>
+        </fieldset>
+        {% endfor %}
+    </div>
+    <div class="pet-cont">    
+        <hr class="main-hr" />
+        <button type = "button" class = "btn" id="add-pet-btn">
+          <i class="fa-solid fa-plus"></i> Add
+        </button>
+        <button type="button" class = "btn" id="remove-pet-btn">
+          <i class="fa-solid fa-minus"></i> Remove
+        </button>
+    </div>
+      </br>
+      {% if message %}
+      <h3 type="message">{{message}}</h3>
+      {% endif %} {% if error %}
+      <h3 type="error">{{error}}</h3>
+      {% endif %}
+      {% for error in form.Email.errors %}
+      <h3 type="error">{{error}}</h3>
+      {% endfor %}
+      {{form.Submit(class_ = "submit")}}
+  </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("add-pet-btn").addEventListener("click", function () {
+      const petFieldsContainer = document.getElementById("pet-fields");
+      const petCount = petFieldsContainer.querySelectorAll('fieldset').length + 1;
+  
+      const newFieldset = document.createElement("fieldset");
+      newFieldset.innerHTML = `
+        <legend><h2>Pet Info ${petCount}</h2></legend>
+        <input type="text" class="formdata" name="PetName${petCount}" placeholder="Pet's Name">
+        <select class="formdata" name="PetType${petCount}">
+          <option value="" disabled selected>Choose Your Pet's Type</option>
+          <option value="Dog">Dog</option>
+          <option value="Cat">Cat</option>
+          <option value="Bird">Bird</option>
+          <option value="Hamster">Hamster</option>
+          <option value="Goldfish">Goldfish</option>
+          <option value="Turtle">Turtle</option>
+        </select>
+        <textarea class="formdata" name="PetMedicalHistory${petCount}" placeholder="Pet's Medical History"></textarea>
+      `;
+  
+      petFieldsContainer.appendChild(newFieldset);
+    });
+  });
+  
+  document.getElementById("remove-pet-btn").addEventListener("click", function () {
+    const petFieldsContainer = document.getElementById("pet-fields");
+    const fieldsets = petFieldsContainer.querySelectorAll('fieldset');
+    
+    // Check if there is at least one fieldset to remove
+    if (fieldsets.length > 0) {
+      // Remove the last added fieldset
+      const lastFieldset = fieldsets[fieldsets.length - 1];
+      petFieldsContainer.removeChild(lastFieldset);
+    }
+  });
+</script>
+</br>
+{%endblock%}
+</html>

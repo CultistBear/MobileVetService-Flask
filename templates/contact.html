@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <body class="home">
+    {% block body %}
+<h2 class="heading">Doctor Contact Information</h2>
+    <div id="appointments">
+        {%for Doc in DocList%}
+        <div class="appointment-card">
+            <h3>{{Doc['Doctor_Name']}}</h3>
+            <p>Email: {{Doc['Email']}}</p>
+            <p>Phone: {{Doc['Phone']}}</p>
+            <p>Pet Type: {{Doc['Pet_Types']}}</p>
+            <p>Working Hours: {{Doc['Start_Time']}} to {{Doc['End_Time']}}</p>
+        </div>
+        </br>
+        {%endfor%}
+    </div>
+    <div class="img"><img src="/static/Staff.jpg" alt="Staff Image"  width="500" height="600"></div>
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Feel free to reach out to us with any questions or to schedule an appointment. Our team is here to assist you and your pets.</p>
+        <p>Contact Information:</p>
+        <ul>
+            <li><strong>Address:</strong> 123 Veterinary Way, Cityville, State, Zip Code</li>
+            <li><strong>Phone:</strong> (123) 456-7890</li>
+            <li><strong>Email:</strong> contact@lifelinevet.com</li>
+        </ul>
+        <img src="/static/contact.png" alt="Contact Image" width="400" height="400">
+    </section>
+</br>
+{% endblock %}
